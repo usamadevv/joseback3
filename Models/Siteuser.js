@@ -42,6 +42,10 @@ let Siteuser = new Schema({
         type: String,
         
     },
+
+    manageraccess:{
+        type:String,
+      },
     supermode:{
       type:String,
     },

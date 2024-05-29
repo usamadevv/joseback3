@@ -230,6 +230,8 @@ Siteroute.route('/update').post(authenticate, function (req, res) {
 
             clientid: req.body.clientid,
 
+            manageraccess: req.body.manageraccess,
+
             langlat: req.body.langlat
 
         },
