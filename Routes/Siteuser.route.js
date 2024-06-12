@@ -559,6 +559,23 @@ Siteroute.route('/adduser').post(authenticate, function (req, res) {
         }
     });
 });
+Siteroute.route('/deleteusercontact').post(authenticate, function (req, res) {
+    console.log(req.body)
+    Siteuserd.findOneAndUpdate({ _id: req.body._id },
+        { $pull: { contacts: { userid: { $in: req.body.ids } } } },
+        function (error, admin) {
+        if (error) {
+            console.log(error);
+            res.send('error');
+        }  else {
+            // Check if the contact exists in the "contacts" array
+
+            // Save the updated "Admin" document
+            res.status(200).send('Array objects deleted');
+
+        }
+    });
+});
 const getEquallySpacedIndexes = (length) => {
     // Calculate the step size to ensure that we have 10 equally spaced indexes
     const step = Math.max(Math.floor(length / 10), 1);

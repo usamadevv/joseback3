@@ -78,6 +78,47 @@ Noteroute.route('/hidefrom').post(function(req, res) {
 
     
 });
+Noteroute.route('/hideallfrom').post(function(req, res) {
+
+
+    console.log(req.body)
+
+
+    Notes.updateMany(
+        {$or:[ {senderid:{ $in: req.body.ids },
+            recieverid:req.body.from},
+            {senderid:req.body.from ,
+              recieverid:{ $in: req.body.ids }}]}, 
+        {
+            $push: {
+                hidepart:  req.body.from
+            }
+        },
+        { new: true },
+    
+       function (error, success) {
+             if (error) {
+                res.send('error')
+             } else {
+                if(!success){
+
+                    res.send('invalid')
+                }
+                else{
+                    console.log(success)
+
+                    res.status(200).json({'Notes':success});
+                }
+                
+             }
+         }
+    
+      
+    )
+    
+
+    
+});
 
 
 Noteroute.route('/delete').post(authenticate, function(req, res) {
